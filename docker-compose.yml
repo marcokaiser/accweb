@@ -3,22 +3,24 @@ version: '3'
 services:
   accweb:
     image: accweb:latest
-    container_name : accweb-server
+    container_name : accweb-srv
     restart: always
     ports:
-      - 8080:8080
+      - 3080:8080/tcp
+      - 9321:9321/tcp
+      - 9321:9321/udp
     volumes:
-      - "accweb:/accweb"
-      - "acccerts:/sslcerts"
-      - "accserver:/accserver"
+      - accweb:/accweb
+      - acccerts:/sslcerts
+      - /srv/acc:/accserver
     environment:
       ACCWEB_HOST: 0.0.0.0:8080
       ACCWEB_ENABLE_TLS: "false"
       ACCWEB_CERT_FILE: /sslcerts/certificate.crt
       ACCWEB_PRIV_FILE: /sslcerts/private.key
-      ACCWEB_ADMIN_PASSWORD: weakadminpassword 
-      ACCWEB_MOD_PASSWORD: weakmodpassword 
-      ACCWEB_RO_PASSWORD: weakropassword 
+      ACCWEB_ADMIN_PASSWORD: Stadtweg45 
+      ACCWEB_MOD_PASSWORD: Stadtweg 
+      ACCWEB_RO_PASSWORD: AccRO
       ACCWEB_LOGLEVEL: info 
       ACCWEB_CORS: "*"
     networks:
@@ -30,4 +32,4 @@ networks:
 volumes:
   accweb:
   acccerts:
-  accserver:
+  

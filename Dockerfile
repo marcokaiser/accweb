@@ -15,10 +15,11 @@ RUN apt update && \
 RUN curl -sL https://deb.nodesource.com/setup_14.x -o nodesource_setup.sh && bash nodesource_setup.sh
 RUN apt-get install -y nodejs
 
-ENV GOPATH=/go
-RUN go build -tags netgo -a -v -ldflags "-s -w" main.go 
-
 RUN cd /go/src/github.com/assetto-corsa-web/accweb/public && npm i && npm rebuild node-sass && npm run build
+
+ENV GOPATH=/go
+RUN go build -ldflags "-s -w" -o . cmd/main.go 
+
 
 # Final image
 FROM ubuntu:bionic
